@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Love ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #ffe4ec, #f3e8ff);
+  text-align: center;
+  overflow-x: hidden;
+}
+
+/* Loader */
+#loader {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #fff0f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.heart {
+  width: 50px;
+  height: 50px;
+  background: red;
+  transform: rotate(45deg);
+  animation: beat 1s infinite;
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+  width: 50px;
+  height: 50px;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.heart::before { top: -25px; left: 0; }
+.heart::after { left: -25px; top: 0; }
+
+@keyframes beat {
+  0%, 100% { transform: scale(1) rotate(45deg); }
+  50% { transform: scale(1.2) rotate(45deg); }
+}
+
+/* Hero */
+.hero {
+  padding: 100px 20px;
+}
+
+h1 {
+  font-size: 3rem;
+  color: #ff4d6d;
+}
+
+.btn {
+  padding: 12px 25px;
+  background: #ff4d6d;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.hidden { display: none; }
+
+/* Typing text */
+#letter {
+  width: 80%;
+  margin: auto;
+  font-size: 1.2rem;
+  color: #333;
+  min-height: 120px;
+}
+
+/* Gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  padding: 20px;
+}
+
+.gallery img {
+  width: 100%;
+  border-radius: 15px;
+}
+
+/* Music Player */
+.music-player {
+  margin: 20px;
+  padding: 15px;
+  background: #fff0f5;
+  border-radius: 15px;
+  display: inline-block;
+}
+
+/* Floating hearts */
+.floating-heart {
+  position: fixed;
+  font-size: 20px;
+  animation: floatUp 5s linear infinite;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(100vh); opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* Popup */
+#popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  display: none;
+}
+
+/* Footer */
+footer {
+  margin: 40px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="heart"></div>
+  <p>Something special for you...</p>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>For My Love ❤️</h1>
+  <p>I made this just for you</p>
+  <button class="btn" onclick="showSurprise()">Click to Open Your Surprise</button>
+</div>
+
+<!-- Surprise Section -->
+<div id="surprise" class="hidden">
+
+  <h2 id="dateCounter"></h2>
+
+  <h2>My Love Letter 💌</h2>
+  <p id="letter"></p>
+
+  <!-- Music Player -->
+  <div class="music-player">
+    <p>🎶 Our Song</p>
+    <button onclick="playMusic()">▶️ Play</button>
+    <button onclick="pauseMusic()">⏸ Pause</button>
+  </div>
+
+  <audio id="music" src="song.mp3"></audio>
+
+
+  <!-- Reasons -->
+  <h2>Why I Love You ❤️</h2>
+  <ul id="reasons"></ul>
+
+  <!-- Proposal -->
+  <h2>Will you always be mine? 💖</h2>
+  <button class="btn" onclick="showPopup()">Yes ❤️</button>
+  <button class="btn" onclick="showPopup()">Forever Yes 💖</button>
+
+</div>
+
+<!-- Popup -->
+<div id="popup">
+  <h2>I knew it! I love you ❤️</h2>
+</div>
+
+<footer>
+  Made with ❤️ by Prabhu
+</footer>
+
+<script>
+// Loader
+window.onload = () => {
+  setTimeout(() => {
+    document.getElementById('loader').style.display = 'none';
+  }, 2000);
+};
+
+// Show surprise
+function showSurprise() {
+  document.getElementById('surprise').classList.remove('hidden');
+  typeText();
+  showReasons();
+  startHearts();
+}
+
+// Typing effect
+const text = "From the moment you came into my life, everything became more beautiful... 💖\n\nUn kooda pesina ovvoru nimishamum enakku romba special... 🥺\n\nYou are my happiness, my peace, my everything ❤️";
+let i = 0;
+
+function typeText() {
+  if (i < text.length) {
+    document.getElementById('letter').innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeText, 40);
+  }
+}
+
+// Music
+function playMusic() {
+  document.getElementById('music').play();
+}
+function pauseMusic() {
+  document.getElementById('music').pause();
+}
+
+// Reasons
+const reasonsList = [
+  "Un smile enaku romba pidikkum 😊",
+  "You understand me better than anyone",
+  "You make my life beautiful ❤️",
+  "I feel safe and happy with you",
+  "I am lucky to have you 💖"
+];
+
+function showReasons() {
+  let ul = document.getElementById('reasons');
+  reasonsList.forEach((r, index) => {
+    setTimeout(() => {
+      let li = document.createElement('li');
+      li.innerText = r;
+      ul.appendChild(li);
+    }, index * 1000);
+  });
+}
+
+// Popup
+function showPopup() {
+  document.getElementById('popup').style.display = 'block';
+}
+
+// Floating hearts
+function startHearts() {
+  setInterval(() => {
+    let heart = document.createElement('div');
+    heart.className = 'floating-heart';
+    heart.innerText = '❤️';
+    heart.style.left = Math.random() * 100 + 'vw';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+  }, 300);
+}
+
+// Love counter
+const startDate = new Date("2021-10-14"); // change this
+const today = new Date();
+const diffDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+
+document.getElementById("dateCounter").innerText =
+  "We have been together for " + diffDays + " days ❤️";
+
+</script>
+
+</body>
+</html>
